@@ -19,18 +19,20 @@ export default function Navbar() {
         <li style={{ cursor: 'pointer' }}>Drivers History</li>
         <li style={{ cursor: 'pointer' }}>Analytics</li>
       </ul>
-      <Link href="/login" style={{ 
-        marginLeft: 'auto', 
-        padding: '0.5rem 1.5rem', 
-        backgroundColor: '#fff', 
-        color: '#1c1227', 
-        border: 'none', 
-        borderRadius: '0.25rem', 
-        cursor: 'pointer', 
-        fontWeight: 'bold', 
-        textDecoration: 'none' 
-      }}>
-        Login
+      <Link href="/login" legacyBehavior>
+        <a style={{ 
+          marginLeft: 'auto', 
+          padding: '0.5rem 1.5rem', 
+          backgroundColor: '#fff', 
+          color: '#1c1227', 
+          border: 'none', 
+          borderRadius: '0.25rem', 
+          cursor: 'pointer', 
+          fontWeight: 'bold', 
+          textDecoration: 'none' 
+        }}>
+          Login
+        </a>
       </Link>
     </nav>
   );
