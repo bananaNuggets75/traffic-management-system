@@ -4,22 +4,34 @@ import React from 'react';
 export default function Navbar() {
   return (
     <header>
-      <nav
-        className="flex items-center justify-between p-6 lg:px-8 h-20 border
-        border-t-0 border-l-0 border-r-0 border-b-gray-600"
-        aria-label="Global"
-      >
+      <nav>
         <div className="flex lg:flex-1">
-          <Link href="/" className="m-1.5 p-1.5">
+          <Link href="/" className="text-lg font-bold text-gray-800">
             Next.js Authentication
           </Link>
         </div>
-        <Link href="/dashboard" className="m-1.5 p-1.5">
-          Dashboard
-        </Link>
-        <Link href="/login" className="m-1.5 p-1.5">
-          Log In
-        </Link>
+        <ul>
+          <li>
+            <Link href="/dashboard">Dashboard</Link>
+          </li>
+          <li>
+            <Link href="/payment">Fine Management and Payment</Link>
+          </li>
+          <li>
+            <Link href="/driversProfile">Drivers Profile and Violation History</Link>
+          </li>
+          <li>
+            <Link href="/violationReporting">Violation and Reporting</Link>
+          </li>
+        </ul>
+        <div className="right-nav">
+          <button className="login-button">
+            <Link href="/login">Log In</Link>
+          </button>
+          <button className="signup-button">
+            <Link href="/signup">Sign Up</Link>
+          </button>
+        </div>
       </nav>
     </header>
   );

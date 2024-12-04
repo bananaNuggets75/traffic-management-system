@@ -1,6 +1,10 @@
 :root {
   --background: #ffffff;
   --foreground: #171717;
+  --primary-color: #1c1227;
+  --hover-color: #000000;
+  --button-green: #14a800;
+  --button-green-hover: #12a400;
 }
 
 @media (prefers-color-scheme: dark) {
@@ -43,8 +47,9 @@ a {
 
 /* Navbar styles */
 nav {
-  padding: 1rem;
-  background-color: #1c1227;
+  padding: 1rem 2rem;
+  background-color: var(--background);
+  border-bottom: 1px solid #e0e0e0;
   display: flex;
   align-items: center;
   justify-content: space-between;
@@ -53,86 +58,59 @@ nav {
 nav ul {
   list-style: none;
   display: flex;
-  gap: 2rem;
+  gap: 1.5rem;
   margin: 0;
   padding: 0;
-  color: #fff;
-  font-family: Arial, sans-serif;
-  font-size: 1rem;
+  color: var(--foreground);
+  font-size: 0.875rem;
 }
 
 nav ul li {
   cursor: pointer;
 }
 
+nav ul li a {
+  font-weight: 500;
+  color: var(--foreground);
+  transition: color 0.3s ease;
+}
+
+nav ul li a:hover {
+  color: var(--hover-color);
+}
+
 nav .right-nav {
-  margin-left: auto;
   display: flex;
+  align-items: center;
   gap: 1rem;
 }
 
-nav .right-nav a {
-  color: #fff;
+nav .right-nav .login-button {
+  font-size: 0.875rem;
   font-weight: bold;
-}
-
-nav .login-button {
-  padding: 0.5rem 1.5rem;
-  background-color: #fff;
-  color: #1c1227;
+  color: var(--foreground);
+  background-color: transparent;
   border: none;
-  border-radius: 0.25rem;
   cursor: pointer;
+  transition: color 0.3s ease;
+}
+
+nav .right-nav .login-button:hover {
+  color: var(--hover-color);
+}
+
+nav .right-nav .signup-button {
+  font-size: 0.875rem;
   font-weight: bold;
-}
-
-/* Login Page Styles */
-.login-page {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  height: 100vh;
-  background-color: #f8f8f8;
-}
-
-.login-form {
-  background-color: #fff;
-  padding: 2rem;
-  border-radius: 0.5rem;
-  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-  width: 300px;
-}
-
-.login-form h2 {
-  margin-bottom: 1.5rem;
-  text-align: center;
-  color: #333;
-}
-
-.form-group {
-  margin-bottom: 1rem;
-}
-
-.form-group label {
-  display: block;
-  margin-bottom: 0.5rem;
-  color: #555;
-}
-
-.form-group input {
-  width: 100%;
-  padding: 0.5rem;
-  border: 1px solid #ddd;
-  border-radius: 0.25rem;
-}
-
-.submit-button {
-  width: 100%;
-  padding: 0.5rem;
-  background-color: #1c1227;
   color: #fff;
-  border: none;
+  background-color: var(--button-green);
+  padding: 0.5rem 1rem;
   border-radius: 0.25rem;
+  border: none;
   cursor: pointer;
-  font-weight: bold;
+  transition: background-color 0.3s ease;
+}
+
+nav .right-nav .signup-button:hover {
+  background-color: var(--button-green-hover);
 }
