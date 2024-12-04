@@ -15,6 +15,7 @@ export default function Navbar() {
           </a>
         </div>
         <Link href="/dashboard">Dashboard</Link>
+        <Link href="/login">Log In</Link>
       </nav>
     </header>
   );
