@@ -10,12 +10,16 @@ export default function Navbar() {
         aria-label="Global"
       >
         <div className="flex lg:flex-1">
-          <a href="/" className="m-1.5 p-1.5">
+          <Link href="/" className="m-1.5 p-1.5">
             Next.js Authentication
-          </a>
+          </Link>
         </div>
-        <Link href="/dashboard">Dashboard</Link>
-        <Link href="/login">Log In</Link>
+        <Link href="/dashboard" className="m-1.5 p-1.5">
+          Dashboard
+        </Link>
+        <Link href="/login" className="m-1.5 p-1.5">
+          Log In
+        </Link>
       </nav>
     </header>
   );
