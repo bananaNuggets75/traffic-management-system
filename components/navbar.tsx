@@ -28,6 +28,9 @@ export default function Navbar() {
           <button className="login-button">
             <Link href="/login">Log In</Link>
           </button>
+          <button className="signup-button">
+            <Link href="/signup">Sign Up</Link>
+          </button>
         </div>
       </nav>
     </header>
