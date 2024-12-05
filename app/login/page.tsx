@@ -1,23 +1,23 @@
-"use client"; 
+"use client"; // Marks this file as a client component
 
 import React, { useState } from 'react';
-import { useRouter } from 'next/navigation';
+import { useRouter } from 'next/navigation'; // For navigation
 import styles from '../page.module.css';
 
 export default function LoginPage() {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
-  const [errorMessage, setErrorMessage] = useState('');
   const router = useRouter();
 
   const handleLogin = (e: React.FormEvent) => {
     e.preventDefault();
 
+    // Mock authentication logic
     if (email === "admin@example.com" && password === "password") {
-      localStorage.setItem("authToken", "adminAuthToken"); 
-      router.push("/dashboard"); 
+      localStorage.setItem("authToken", "adminAuthToken"); // Save auth token in localStorage
+      router.push("/dashboard"); // Redirect to the dashboard
     } else {
-      setErrorMessage("Invalid email or password.");
+      alert("Invalid email or password.");
     }
   };
 
@@ -25,9 +25,6 @@ export default function LoginPage() {
     <div className={styles.page}>
       <h1>Login</h1>
       <form className="login-form" onSubmit={handleLogin}>
-        {errorMessage && (
-          <p className="error-message text-red-500">{errorMessage}</p>
-        )}
         <div className="form-group">
           <label htmlFor="email">Email:</label>
           <input
@@ -52,7 +49,7 @@ export default function LoginPage() {
             required
           />
         </div>
-        <button type="submit" className="submit-button bg-blue-500 text-white px-4 py-2 rounded">
+        <button type="submit" className="submit-button">
           Login
         </button>
       </form>
