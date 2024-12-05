@@ -1,29 +1,22 @@
-"use client"; // This makes the file a client component
+"use client";
 
-import React, { useEffect } from 'react';
-import { useRouter } from 'next/navigation'; // For client-side routing
-import styles from '../page.module.css';
+import React, { useEffect } from "react";
+import { useRouter } from "next/navigation";
 
 export default function DashboardPage() {
   const router = useRouter();
 
   useEffect(() => {
-    const isAuthenticated = localStorage.getItem("authToken");
-
-    if (!isAuthenticated) {
-      router.push("/login"); // Redirect to login if not authenticated
+    const token = localStorage.getItem("authToken");
+    if (!token) {
+      router.push("/login"); // Redirect if not logged in
     }
-  }, [router]);
-
-  const handleLogout = () => {
-    localStorage.removeItem("authToken"); // Clear token
-    router.push("/login"); // Redirect to logzain
-  };
+  }, []);
 
   return (
-    <div className={styles.page}>
-      <h1>Admin Dashboard</h1>
-      <button onClick={handleLogout}>Logout</button>
+    <div className="p-4">
+      <h1 className="text-2xl font-bold">Welcome to the Dashboard</h1>
+      <p>Access your data and manage your account here.</p>
     </div>
   );
 }
