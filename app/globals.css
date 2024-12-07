@@ -148,3 +148,136 @@ nav .right-nav .login-button:hover {
 .backButton:hover {
   background-color: var(--button-green);
 }
+
+/* Dashboard Background and Layout */
+.dashboard-container {
+  background-color: #f5f5f5;
+  color: #333;
+  min-height: 100vh;
+  background-size: cover;
+  background-position: center;
+  padding: 20px;
+}
+
+/* Header Section */
+.header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  width: 100%;
+  max-width: 1200px;
+  margin: 0 auto 20px;
+}
+
+.header h1 {
+  font-size: 2.5rem;
+  font-weight: bold;
+  color: white;
+  text-shadow: 1px 1px 5px rgba(0, 0, 0, 0.8);
+}
+
+/* Statistics Section */
+.stats-container {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 20px;
+  width: 100%;
+  max-width: 1200px;
+  margin: 0 auto 30px;
+}
+
+.stat-box {
+  color: white;
+  padding: 20px;
+  border-radius: 10px;
+  text-align: center;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+}
+
+.stat-box h2 {
+  font-size: 1.5rem;
+  font-weight: bold;
+  margin-bottom: 10px;
+}
+
+.stat-box p {
+  font-size: 2rem;
+  font-weight: bold;
+}
+
+/* Table Styles */
+.recent-violations-table {
+  width: 100%;
+  max-width: 1200px;
+  background-color: rgba(255, 255, 255, 0.85);
+  border-radius: 10px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+  padding: 20px;
+  margin: 0 auto 30px;
+}
+
+.recent-violations-table-header {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 20px;
+  align-items: center;
+}
+
+.recent-violations-table-header h2 {
+  font-size: 1.5rem;
+  color: #4a4a4a;
+}
+
+.recent-violations-table-header button {
+  background-color: #6c63ff;
+  color: white;
+  padding: 10px 20px;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+.recent-violations-table-header button:hover {
+  background-color: #14a800;
+}
+
+.recent-violations-table table {
+  width: 100%;
+  border-collapse: collapse;
+  text-align: left;
+}
+
+.recent-violations-table th,
+.recent-violations-table td {
+  border-bottom: 2px solid #ccc;
+  padding: 10px;
+}
+
+.recent-violations-table td {
+  border-bottom: 1px solid #eee;
+}
+
+.recent-violations-table td.severity-high {
+  color: #e53935;
+}
+
+.recent-violations-table td.severity-medium {
+  color: #fb8c00;
+}
+
+/* Heatmap Styles */
+.heatmap {
+  width: 100%;
+  max-width: 1200px;
+  height: 300px;
+  background-color: rgba(0, 0, 0, 0.7);
+  border-radius: 10px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+  margin: 0 auto;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  color: white;
+  font-size: 1.5rem;
+  text-align: center;
+}
