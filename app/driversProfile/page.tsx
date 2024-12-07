@@ -1,10 +1,46 @@
 "use client";
-import { useState } from 'react';
+import React, { useState } from 'react';
 
-
+// Define the type for styles to help TypeScript understand the correct properties
+const styles: { [key: string]: React.CSSProperties } = {
+  container: {
+    maxWidth: '600px',
+    margin: '0 auto',
+    padding: '20px',
+    textAlign: 'center', // Valid CSS value
+    fontWeight: 'bold',
+  },
+  profile: {
+    marginBottom: '20px',
+    padding: '10px',
+    border: '1px solid #ccc',
+    borderRadius: '5px',
+    cursor: 'pointer',
+    transition: 'background-color 0.3s',
+    fontWeight: 'bold',
+    backgroundColor: 'blue',
+  },
+  table: {
+    width: '100%',
+    borderCollapse: 'collapse',
+    marginBottom: '20px',
+    fontWeight: 'bold',
+    textAlign: 'center',
+  },
+  totalFines: {
+    fontWeight: 'bold',
+  },
+  backButton: {
+    marginBottom: '20px',
+    padding: '10px 15px',
+    backgroundColor: 'black',
+    color: 'white',
+    border: 'none',
+    borderRadius: '4px',
+  },
+};
 
 const DriverProfile = () => {
- 
   const [drivers] = useState([
     {
       id: 1,
@@ -49,7 +85,6 @@ const DriverProfile = () => {
   };
 
   return (
-    
     <div style={styles.container}>
       <h1>DRIVER PROFILE</h1>
 
@@ -95,47 +130,6 @@ const DriverProfile = () => {
       )}
     </div>
   );
-};
-
-const styles = {
-  container: {
-    maxWidth: '600px',
-    margin: '0 auto',
-    padding: '20px',
-    textAlign: 'center',
-    fontWeight: 'bold',
-
-  },
-  profile: {
-    marginBottom: '20px',
-    padding: '10px',
-    border: '1px solid #ccc',
-    borderRadius: '5px',
-    cursor: 'pointer',
-    transition: 'background-color 0.3s',
-    fontWeight: 'bold',
-    backgroundColor: 'blue',
-    
-  },
-  table: {
-    width: '100%',
-    borderCollapse: 'collapse',
-    marginBottom: '20px',
-    fontWeight: 'bold',
-    textAlign: 'center',
-  },
-  totalFines: {
-    fontWeight: 'bold',
-
-  },
-  backButton: {
-    marginBottom: '20px',
-    padding: '10px 15px',
-    backgroundColor: 'black',
-    color: 'white',
-    border: 'none',
-    borderRadius: '4px',
-  },
 };
 
 export default DriverProfile;
