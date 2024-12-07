@@ -99,18 +99,3 @@ nav .right-nav .login-button:hover {
   color: var(--hover-color);
 }
 
-nav .right-nav .signup-button {
-  font-size: 0.875rem;
-  font-weight: bold;
-  color: #fff;
-  background-color: var(--button-green);
-  padding: 0.5rem 1rem;
-  border-radius: 0.25rem;
-  border: none;
-  cursor: pointer;
-  transition: background-color 0.3s ease;
-}
-
-nav .right-nav .signup-button:hover {
-  background-color: var(--button-green-hover);
-}
