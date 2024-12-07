@@ -1,10 +1,7 @@
 "use client";
 import { useState } from 'react';
 
-
-
 const DriverProfile = () => {
- 
   const [drivers] = useState([
     {
       id: 1,
@@ -49,14 +46,13 @@ const DriverProfile = () => {
   };
 
   return (
-    
-    <div style={styles.container}>
+    <div className="container">
       <h1>DRIVER PROFILE</h1>
 
       {!selectedDriver ? (
         <div>
           {drivers.map(driver => (
-            <div key={driver.id} style={styles.profile} onClick={() => handleDriverClick(driver)}>
+            <div key={driver.id} className="profile" onClick={() => handleDriverClick(driver)}>
               <h2>{driver.name}</h2>
               <p><strong>License Number:</strong> {driver.licenseNumber}</p>
               <p><strong>Address:</strong> {driver.address}</p> 
@@ -65,12 +61,12 @@ const DriverProfile = () => {
         </div>
       ) : (
         <div>
-          <button onClick={handleBackClick} style={styles.backButton}>Back to Profiles</button>
+          <button onClick={handleBackClick} className="backButton">Back to Profiles</button>
           <h2>{selectedDriver.name}</h2>
           <p><strong>License Number:</strong> {selectedDriver.licenseNumber}</p>
           <p><strong>Address:</strong> {selectedDriver.address}</p> 
           <h2>Violation History</h2>
-          <table style={styles.table}>
+          <table className="table">
             <thead>
               <tr>
                 <th>Date</th>
@@ -88,54 +84,13 @@ const DriverProfile = () => {
               ))}
             </tbody>
           </table>
-          <div style={styles.totalFines}>
+          <div className="totalFines">
             <h3>Total Fines: ₱{selectedDriver.violations.reduce((total, violation) => total + violation.fine, 0)}</h3>
           </div>
         </div>
       )}
     </div>
   );
-};
-
-const styles = {
-  container: {
-    maxWidth: '600px',
-    margin: '0 auto',
-    padding: '20px',
-    textAlign: 'center',
-    fontWeight: 'bold',
-
-  },
-  profile: {
-    marginBottom: '20px',
-    padding: '10px',
-    border: '1px solid #ccc',
-    borderRadius: '5px',
-    cursor: 'pointer',
-    transition: 'background-color 0.3s',
-    fontWeight: 'bold',
-    backgroundColor: 'blue',
-    
-  },
-  table: {
-    width: '100%',
-    borderCollapse: 'collapse',
-    marginBottom: '20px',
-    fontWeight: 'bold',
-    textAlign: 'center',
-  },
-  totalFines: {
-    fontWeight: 'bold',
-
-  },
-  backButton: {
-    marginBottom: '20px',
-    padding: '10px 15px',
-    backgroundColor: 'black',
-    color: 'white',
-    border: 'none',
-    borderRadius: '4px',
-  },
 };
 
 export default DriverProfile;
