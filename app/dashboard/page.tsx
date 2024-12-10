@@ -8,6 +8,8 @@ const mockViolations = [
   { id: 3, type: 'Reckless Driving', location: 'Sta-Barbara, IloIlo', date: '2024-03-14', severity: 'High', plateNumber: 'FAA-324' },
   { id: 4, type: 'Overspeeding', location: 'New Lucena, IloIlo', date: '2024-03-14', severity: 'Medium', plateNumber: 'FAA2-323' },
   { id: 5, type: 'Illegal Parking', location: 'Mission Road, IloIlo', date: '2024-03-14', severity: 'Medium', plateNumber: 'FAZ-3242' },
+  { id: 6, type: 'Overspeeding', location: 'Molo, IloIlo', date: '2024-03-14', severity: 'Medium', plateNumber: 'FAK-3246' },
+  { id: 7, type: 'Illegal Parking', location: 'San Miguel, IloIlo', date: '2024-03-14', severity: 'Medium', plateNumber: 'FBZ-3942' },
 ];
 
 const finesCollected = 45000;
@@ -159,28 +161,30 @@ const Dashboard = () => {
         </table>
       </div>
 
-      {/* Mockup Heatmap */}
-      <div
+        {/* Heatmap Section */}
+        <div
         style={{
-          width: '100%',
-          maxWidth: '1200px',
-          height: '300px',
-          backgroundColor: 'rgba(0, 0, 0, 0.7)', // Semi-transparent black
-          borderRadius: '10px',
+          width: '90%',
+          backgroundColor: 'rgba(255, 255, 255, 0.8)',
+          padding: '20px',
+          borderRadius: '8px',
           boxShadow: '0 4px 8px rgba(0, 0, 0, 0.2)',
-          margin: '0 auto',
-          display: 'flex',
-          justifyContent: 'center',
-          alignItems: 'center',
-          color: 'white',
-          fontSize: '1.5rem',
           textAlign: 'center',
         }}
       >
-        <p>Heatmap Placeholder (Replace with a functional heatmap or an image)</p>
+        <h2 style={{ fontSize: '1.5rem', marginBottom: '16px' }}>Traffic Violation Heatmap</h2>
+        <img
+          src="https://docs.mapbox.com/help/assets/ideal-img/heatmap-intensity-two.11b6e1c.942.png"
+          alt="Mockup Heatmap"
+          style={{
+            width: '100%',
+            borderRadius: '8px',
+          }}
+        />
       </div>
     </div>
   );
 };
+
 
 export default Dashboard;
