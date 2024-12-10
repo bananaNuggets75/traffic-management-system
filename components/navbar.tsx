@@ -7,13 +7,10 @@ export default function Navbar() {
       <nav>
         <div className="flex lg:flex-1">
           <Link href="/" className="text-lg font-bold text-gray-800">
-            Next.js Authentication
+            SafeDrive
           </Link>
         </div>
         <ul>
-          <li>
-            <Link href="/dashboard">Dashboard</Link>
-          </li>
           <li>
             <Link href="/payment">Fine Management and Payment</Link>
           </li>
