@@ -91,18 +91,39 @@ const Dashboard = () => {
       >
         {/* Bar Chart: Violations for the Whole Year */}
         <div
-          style={{
+           style={{
             backgroundColor: '#1c1c1c',
             padding: '24px',
             borderRadius: '8px',
             boxShadow: '0 4px 8px rgba(255, 255, 255, 0.1)',
-          }}
+            width: '100%',
+            height: 'auto', // Allow height to adjust dynamically
+            display: 'flex', // Flexbox for responsiveness
+            flexDirection: 'column',
+            alignItems: 'center',
+          }
+          }
         >
-          <h2 style={{ fontSize: '24px', fontWeight: 'bold', marginBottom: '16px' }}>
-            Violations for the Whole Year
-          </h2>
-          <Bar data={yearlyViolationsData} height={300} />
-        </div>
+            <h2 style={{ fontSize: '24px', fontWeight: 'bold', marginBottom: '16px', textAlign: 'center' }}>
+    Violations for the Whole Year
+  </h2>
+  <div
+    style={{
+      width: '100%', 
+      maxWidth: '600px', 
+      aspectRatio: '2', 
+    }}
+       >
+       <Bar
+      data={yearlyViolationsData}
+      options={{
+        maintainAspectRatio: false, 
+        responsive: true, 
+      }}
+    />
+      </div>
+     </div>
+        
 
         {/* Violation Summary */}
         <div
