@@ -1,6 +1,11 @@
 'use client';
 
 import React from 'react';
+import { Bar } from 'react-chartjs-2';
+import { Pie } from 'react-chartjs-2';
+import { Chart as ChartJS, Title, Tooltip, Legend, BarElement, CategoryScale, LinearScale } from 'chart.js';
+
+ChartJS.register(Title, Tooltip, Legend, BarElement, CategoryScale, LinearScale);
 
 const mockViolations = [
   { id: 1, type: 'Speeding', location: 'Pavia, IloIlo', date: '2024-03-15', severity: 'High', plateNumber: 'ABC-123' },
@@ -10,172 +15,205 @@ const mockViolations = [
   { id: 5, type: 'Illegal Parking', location: 'Mission Road, IloIlo', date: '2024-03-14', severity: 'Medium', plateNumber: 'FAZ-3242' },
 ];
 
-const finesCollected = 45000;
+const yearlyViolationsData = {
+  labels: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'],
+  datasets: [
+    {
+      label: 'Violations (Whole Year)',
+      data: [15, 20, 30, 25, 35, 40, 45, 50, 60, 55, 70, 80],
+      backgroundColor: 'rgba(25, 47, 122, 0.7)', // Dark blue
+      borderColor: 'rgba(25, 47, 122, 1)', // Dark blue
+      borderWidth: 1,
+    },
+  ],
+};
+
+const violationSummary = {
+  totalViolations: mockViolations.length,
+  totalFines: 45000,
+  violationTypes: {
+    Speeding: 5,
+    IllegalParking: 2,
+    RecklessDriving: 1,
+    Overspeeding: 3,
+  },
+};
+
+const violationTypes = mockViolations.reduce((acc, violation) => {
+  if (acc[violation.type]) {
+    acc[violation.type] += 1;
+  } else {
+    acc[violation.type] = 1;
+  }
+  return acc;
+}, {});
+
+const violationData = Object.entries(violationTypes).map(([name, value]) => ({
+  name,
+  value,
+}));
 
 const Dashboard = () => {
-  const backgroundImage =
-    'https://upload.wikimedia.org/wikipedia/commons/0/0a/Iloilo_Diversion_Road_southbound_traffic_%28Iloilo_City%3B_01-21-2023%29.jpg'; 
-
   return (
     <div
       style={{
-        backgroundColor: '#F5F5F5',
-        color: '#333',
-        minHeight: '100vh',
-        backgroundImage: `url(${backgroundImage})`,
-        backgroundSize: 'cover',
-        backgroundPosition: 'center',
-        padding: '20px',
+        display: 'grid',
+        gridTemplateColumns: '2fr 1fr',
+        gridTemplateRows: '1fr 1fr 1fr',
+        gridGap: '24px',
+        padding: '24px',
+        backgroundColor: '#2C2F38',
+        color: '#fff',
+        height: '100vh',
       }}
     >
-      {/* Header Section */}
+      {/* Left Section: Bar chart for violations and Violation Summary */}
       <div
         style={{
           display: 'flex',
-          justifyContent: 'space-between',
-          alignItems: 'center',
-          width: '100%',
-          maxWidth: '1200px',
-          margin: '0 auto 20px',
+          flexDirection: 'column',
+          gap: '24px',
         }}
       >
-        <h1
-          style={{
-            fontSize: '2.5rem',
-            fontWeight: 'bold',
-            color: 'white',
-            textShadow: '1px 1px 5px rgba(0, 0, 0, 0.8)',
-          }}
-        >
-          SafeDrive
-        </h1>
-      </div>
-
-      {/* Statistics Boxes */}
-      <div
-        style={{
-          display: 'grid',
-          gridTemplateColumns: 'repeat(2, 1fr)',
-          gap: '20px',
-          width: '100%',
-          maxWidth: '1200px',
-          margin: '0 auto 30px',
-        }}
-      >
-        {/* Recent Violations */}
+        {/* Bar Chart: Violations for the Whole Year */}
         <div
           style={{
-            backgroundColor: 'rgba(108, 99, 255, 0.8)', // Semi-transparent purple
-            color: 'white',
-            padding: '20px',
-            borderRadius: '10px',
-            textAlign: 'center',
-            boxShadow: '0 4px 8px rgba(0, 0, 0, 0.2)',
+            backgroundColor: '#1c1c1c',
+            padding: '24px',
+            borderRadius: '8px',
+            boxShadow: '0 4px 8px rgba(255, 255, 255, 0.1)',
           }}
         >
-          <h2 style={{ fontSize: '1.5rem', fontWeight: 'bold', marginBottom: '10px' }}>Recent Violations</h2>
-          <p style={{ fontSize: '2rem', fontWeight: 'bold' }}>{mockViolations.length}</p>
-          <p>Number of Violations Logged</p>
+          <h2 style={{ fontSize: '24px', fontWeight: 'bold', marginBottom: '16px' }}>
+            Violations for the Whole Year
+          </h2>
+          <Bar data={yearlyViolationsData} height={300} />
         </div>
 
-        {/* Fines Collected */}
+        {/* Violation Summary */}
         <div
           style={{
-            backgroundColor: 'rgba(67, 160, 71, 0.8)', // Semi-transparent green
-            color: 'white',
-            padding: '20px',
-            borderRadius: '10px',
-            textAlign: 'center',
-            boxShadow: '0 4px 8px rgba(0, 0, 0, 0.2)',
+            backgroundColor: 'rgba(0, 0, 0, 0.7)',
+            padding: '24px',
+            borderRadius: '8px',
+            boxShadow: '0 4px 8px rgba(255, 255, 255, 0.1)',
+            color: '#FFF',
           }}
         >
-          <h2 style={{ fontSize: '1.5rem', fontWeight: 'bold', marginBottom: '10px' }}>Fines Collected</h2>
-          <p style={{ fontSize: '2rem', fontWeight: 'bold' }}>₱{finesCollected.toLocaleString()}</p>
-          <p>Total Fines This Month</p>
+          <h2 style={{ fontSize: '24px', fontWeight: 'bold', marginBottom: '16px' }}>Violation Summary</h2>
+          <p>Total Violations: {violationSummary.totalViolations}</p>
+          <p>Total Fines Collected: ₱{violationSummary.totalFines.toLocaleString()}</p>
+          <h3 style={{ marginTop: '16px' }}>Violation Types:</h3>
+          <ul>
+            {Object.entries(violationSummary.violationTypes).map(([type, count]) => (
+              <li key={type}>
+                {type}: {count}
+              </li>
+            ))}
+          </ul>
         </div>
       </div>
 
-      {/* Recent Violations Table */}
+      {/* Right Section: Monthly Violations (Pie Chart and Recent Violations) */}
       <div
         style={{
-          width: '100%',
-          maxWidth: '1200px',
-          backgroundColor: 'rgba(255, 255, 255, 0.85)', // Semi-transparent white
-          borderRadius: '10px',
-          boxShadow: '0 4px 8px rgba(0, 0, 0, 0.2)',
-          padding: '20px',
-          margin: '0 auto 30px',
+          display: 'flex',
+          flexDirection: 'column',
+          gap: '24px',
         }}
       >
-        <div
-          style={{
-            display: 'flex',
-            justifyContent: 'space-between',
-            marginBottom: '20px',
-            alignItems: 'center',
-          }}
-        >
-          <h2 style={{ fontSize: '1.5rem', color: '#4A4A4A' }}>Recent Violations</h2>
-          <button
+        {/* Monthly Violations and Pie Chart */}
+        <div style={{ display: 'flex', gap: '24px' }}>
+          {/* Recent Violations */}
+          <div
             style={{
-              backgroundColor: '#6C63FF',
-              color: 'white',
-              padding: '10px 20px',
-              border: 'none',
-              borderRadius: '5px',
-              cursor: 'pointer',
+              backgroundColor: '#333',
+              padding: '24px',
+              borderRadius: '8px',
+              boxShadow: '0 4px 8px rgba(255, 255, 255, 0.1)',
+              flex: 1,
             }}
           >
-            View All
-          </button>
-        </div>
-        <table style={{ width: '100%', borderCollapse: 'collapse', textAlign: 'left' }}>
-          <thead>
-            <tr>
-              <th style={{ borderBottom: '2px solid #CCC', padding: '10px' }}>Type</th>
-              <th style={{ borderBottom: '2px solid #CCC', padding: '10px' }}>Location</th>
-              <th style={{ borderBottom: '2px solid #CCC', padding: '10px' }}>Date</th>
-              <th style={{ borderBottom: '2px solid #CCC', padding: '10px' }}>Severity</th>
-            </tr>
-          </thead>
-          <tbody>
-            {mockViolations.map((violation) => (
-              <tr key={violation.id}>
-                <td style={{ borderBottom: '1px solid #EEE', padding: '10px' }}>{violation.type}</td>
-                <td style={{ borderBottom: '1px solid #EEE', padding: '10px' }}>{violation.location}</td>
-                <td style={{ borderBottom: '1px solid #EEE', padding: '10px' }}>{violation.date}</td>
-                <td
-                  style={{
-                    borderBottom: '1px solid #EEE',
-                    padding: '10px',
-                    color: violation.severity === 'High' ? '#E53935' : '#FB8C00',
-                  }}
-                >
-                  {violation.severity}
-                </td>
-              </tr>
-            ))}
-          </tbody>
-        </table>
-      </div>
+            <h2 style={{ fontSize: '24px', fontWeight: 'bold', marginBottom: '16px' }}>Recent Violations</h2>
+            <table style={{ width: '100%', borderCollapse: 'collapse' }}>
+              <thead>
+                <tr>
+                  <th style={{ textAlign: 'left', padding: '8px', borderBottom: '1px solid #555' }}>No.</th>
+                  <th style={{ textAlign: 'left', padding: '8px', borderBottom: '1px solid #555' }}>Date</th>
+                  <th style={{ textAlign: 'left', padding: '8px', borderBottom: '1px solid #555' }}>Type</th>
+                  <th style={{ textAlign: 'left', padding: '8px', borderBottom: '1px solid #555' }}>Location</th>
+                  <th style={{ textAlign: 'left', padding: '8px', borderBottom: '1px solid #555' }}>Plate Number</th>
+                  <th style={{ textAlign: 'left', padding: '8px', borderBottom: '1px solid #555' }}>Severity</th>
+                </tr>
+              </thead>
+              <tbody>
+                {mockViolations.map((violation, index) => (
+                  <tr key={violation.id}>
+                    <td style={{ padding: '8px', borderBottom: '1px solid #555' }}>{index + 1}</td>
+                    <td style={{ padding: '8px', borderBottom: '1px solid #555' }}>{violation.date}</td>
+                    <td style={{ padding: '8px', borderBottom: '1px solid #555' }}>{violation.type}</td>
+                    <td style={{ padding: '8px', borderBottom: '1px solid #555' }}>{violation.location}</td>
+                    <td style={{ padding: '8px', borderBottom: '1px solid #555' }}>{violation.plateNumber}</td>
+                    <td
+                      style={{
+                        padding: '8px',
+                        borderBottom: '1px solid #555',
+                        color: violation.severity === 'High' ? '#E53935' : '#FB8C00',
+                      }}
+                    >
+                      {violation.severity}
+                    </td>
+                  </tr>
+                ))}
+              </tbody>
+            </table>
+          </div>
 
-      {/* Heatmap Section */}
-      <div
-        style={{
-          width: '100%',
-          maxWidth: '1200px',
-          height: '300px',
-          borderRadius: '10px',
-          boxShadow: '0 4px 8px rgba(0, 0, 0, 0.2)',
-          margin: '0 auto',
-          overflow: 'hidden',
-        }}
-      >
-        <img
-          src="https://docs.mapbox.com/help/assets/ideal-img/heatmap-intensity-two.11b6e1c.942.png"
-          alt="Heatmap"
-          style={{ width: '100%', height: '100%', objectFit: 'cover' }}
-        />
+          {/* Monthly Violations Pie Chart */}
+          <div
+            style={{
+              backgroundColor: '#333',
+              padding: '24px',
+              borderRadius: '8px',
+              boxShadow: '0 4px 8px rgba(255, 255, 255, 0.1)',
+              flex: 0.4,
+            }}
+          >
+            <h2 style={{ fontSize: '24px', fontWeight: 'bold', marginBottom: '16px' }}>
+              Monthly Violations Breakdown
+            </h2>
+            <Pie
+              data={{
+                labels: Object.keys(violationTypes),
+                datasets: [
+                  {
+                    data: Object.values(violationTypes),
+                    backgroundColor: ['#FF9800', '#FF5722', '#9C27B0', '#4CAF50'],
+                  },
+                ],
+              }}
+              height={300}
+            />
+          </div>
+        </div>
+
+        {/* Heatmap */}
+        <div
+          style={{
+            backgroundColor: 'rgba(255, 255, 255, 0.1)',
+            padding: '24px',
+            borderRadius: '8px',
+            boxShadow: '0 4px 8px rgba(255, 255, 255, 0.1)',
+            height: '400px',
+            overflow: 'hidden',
+          }}
+        >
+          <img
+            src="https://www.dpwh.gov.ph/dpwh/2023_DPWH_ATLAS/Road%20Data%202016/Iloilo%20City.jpg"
+            alt="Heatmap"
+            style={{ width: '100%', height: '100%', objectFit: 'cover' }}
+          />
+        </div>
       </div>
     </div>
   );
