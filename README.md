@@ -34,3 +34,24 @@ You can check out [the Next.js GitHub repository](https://github.com/vercel/next
 The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
 
 Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+
+## Dependecies needs to be installed: 
+
+First you need to be in your correct project path, for example:
+
+```bash
+cd traffic-management-system
+```
+
+Then run these commands in your VS Code terminal or your CLI:
+
+```bash
+npm intall
+# and
+npm install chart.js
+# and
+npm install react-chartjs-2@latest chart.js@latest
+# and
+npm install chart.js@3.9.1
+```
+
