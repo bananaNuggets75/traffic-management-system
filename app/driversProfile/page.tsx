@@ -5,7 +5,7 @@ const DriverProfile = () => {
   const [drivers] = useState([
     {
       id: 1,
-      name: 'Jed Jabadan',
+      name: 'Alex Carter',
       licenseNumber: 'ABC123456',
       address: 'Jaro, Iloilo City',
       violations: [
@@ -16,7 +16,7 @@ const DriverProfile = () => {
     },
     {
       id: 2,
-      name: 'Maria Labo',
+      name: 'Kobe ng Pinas',
       licenseNumber: 'XYZ987654',
       address: 'Molo, Iloilo City',
       violations: [
@@ -47,13 +47,13 @@ const DriverProfile = () => {
 
   return (
     <div className="container">
-      <h1>DRIVER PROFILE</h1>
+      <h1>Drivers Profile</h1>
 
       {!selectedDriver ? (
         <div>
           {drivers.map(driver => (
             <div key={driver.id} className="profile" onClick={() => handleDriverClick(driver)}>
-              <h2>{driver.name}</h2>
+              <h1>{driver.name}</h1>
               <p><strong>License Number:</strong> {driver.licenseNumber}</p>
               <p><strong>Address:</strong> {driver.address}</p> 
             </div>
@@ -65,7 +65,7 @@ const DriverProfile = () => {
           <h2>{selectedDriver.name}</h2>
           <p><strong>License Number:</strong> {selectedDriver.licenseNumber}</p>
           <p><strong>Address:</strong> {selectedDriver.address}</p> 
-          <h2>Violation History</h2>
+          <h1>Violation History</h1>
           <table className="table">
             <thead>
               <tr>
@@ -79,13 +79,13 @@ const DriverProfile = () => {
                 <tr key={violation.id}>
                   <td>{violation.date}</td>
                   <td>{violation.description}</td>
-                  <td>{violation.fine}</td>
+                  <td>{violation.fine.toLocaleString()}</td>
                 </tr>
               ))}
             </tbody>
           </table>
           <div className="totalFines">
-            <h3>Total Fines: ₱{selectedDriver.violations.reduce((total, violation) => total + violation.fine, 0)}</h3>
+            <h3>Total Fines: ₱{selectedDriver.violations.reduce((total, violation) => total + violation.fine, 0).toLocaleString()}</h3>
           </div>
         </div>
       )}
