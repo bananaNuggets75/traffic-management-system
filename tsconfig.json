@@ -28,7 +28,7 @@
     ".next/types/**/*.ts",
     "**/*.ts",
     "**/*.tsx"
-  ],
+, "app/payment/page2.js"  ],
   "exclude": [
     "node_modules"
   ]
