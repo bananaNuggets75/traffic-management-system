@@ -1,10 +1,40 @@
 "use client";
-
-import { useState } from "react";
-import { useAppContext } from "../../context/AppContext";
+import { useState } from 'react';
 
 const DriverProfile = () => {
-  const { drivers, addViolation } = useAppContext();
+  const [drivers] = useState([
+    {
+      id: 1,
+      name: 'Jed Jabadan',
+      licenseNumber: 'ABC123456',
+      address: 'Jaro, Iloilo City',
+      violations: [
+        { id: 1, date: '2024-12-01', description: 'Speeding', fine: 10000 },
+        { id: 2, date: '2024-12-02', description: 'Running a red light', fine: 7500 },
+        { id: 3, date: '2024-12-03', description: 'Illegal parking', fine: 5500 },
+      ],
+    },
+    {
+      id: 2,
+      name: 'Maria Labo',
+      licenseNumber: 'XYZ987654',
+      address: 'Molo, Iloilo City',
+      violations: [
+        { id: 1, date: '2024-12-10', description: 'Seatbelt violation', fine: 10550 },
+        { id: 2, date: '2024-12-15', description: 'Speeding', fine: 5500 },
+      ],
+    },
+    {
+      id: 3,
+      name: 'Mr Long Bomb',
+      licenseNumber: 'LMN456789',
+      address: 'Pavia, Iloilo',
+      violations: [
+        { id: 1, date: '2024-05-13', description: 'Illegal parking', fine: 11500 },
+      ],
+    },
+  ]);
+
   const [selectedDriver, setSelectedDriver] = useState(null);
 
   const handleDriverClick = (driver) => {
@@ -17,7 +47,7 @@ const DriverProfile = () => {
 
   return (
     <div className="container">
-      <h1>Drivers Profile</h1>
+      <h1>DRIVER PROFILE</h1>
 
       {!selectedDriver ? (
         <div>
@@ -27,7 +57,7 @@ const DriverProfile = () => {
               className="profile"
               onClick={() => handleDriverClick(driver)}
             >
-              <h1>{driver.name}</h1>
+              <h2>{driver.name}</h2>
               <p><strong>License Number:</strong> {driver.licenseNumber}</p>
               <p><strong>Address:</strong> {driver.address}</p>
             </div>
@@ -35,11 +65,13 @@ const DriverProfile = () => {
         </div>
       ) : (
         <div>
-          <button onClick={handleBackClick} className="backButton">Back to Profiles</button>
+          <button onClick={handleBackClick} className="backButton">
+            Back to Profiles
+          </button>
           <h2>{selectedDriver.name}</h2>
           <p><strong>License Number:</strong> {selectedDriver.licenseNumber}</p>
           <p><strong>Address:</strong> {selectedDriver.address}</p>
-          <h1>Violation History</h1>
+          <h2>Violation History</h2>
           <table className="table">
             <thead>
               <tr>
@@ -59,7 +91,12 @@ const DriverProfile = () => {
             </tbody>
           </table>
           <div className="totalFines">
-            <h3>Total Fines: ₱{selectedDriver.violations.reduce((total, violation) => total + violation.fine, 0).toLocaleString()}</h3>
+            <h3>
+              Total Fines: ₱
+              {selectedDriver.violations
+                .reduce((total, violation) => total + violation.fine, 0)
+                .toLocaleString()}
+            </h3>
           </div>
         </div>
       )}
