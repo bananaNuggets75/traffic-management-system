@@ -189,7 +189,7 @@ const Dashboard = () => {
             padding: '24px',
             borderRadius: '8px',
             boxShadow: '0 4px 8px rgba(255, 255, 255, 0.1)',
-            height: '450px',
+            height: '605px',
           }}
         >
           <h2 style={{ textAlign: 'center', marginBottom: '16px' }}>Violation Types</h2>
