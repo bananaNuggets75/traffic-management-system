@@ -1,96 +1,95 @@
-"use client";
-import { useState } from 'react';
+'use client';
 
-const DriverProfile = () => {
-  const [drivers] = useState([
-    {
-      id: 1,
-      name: 'Alex Carter',
-      licenseNumber: 'ABC123456',
-      address: 'Jaro, Iloilo City',
-      violations: [
-        { id: 1, date: '2024-12-01', description: 'Speeding', fine: 10000 },
-        { id: 2, date: '2024-12-02', description: 'Running a red light', fine: 7500 },
-        { id: 3, date: '2024-12-03', description: 'Illegal parking', fine: 5500 },
-      ],
-    },
-    {
-      id: 2,
-      name: 'Kobe ng Pinas',
-      licenseNumber: 'XYZ987654',
-      address: 'Molo, Iloilo City',
-      violations: [
-        { id: 1, date: '2024-12-10', description: 'Seatbelt violation', fine: 10550 },
-        { id: 2, date: '2024-12-15', description: 'Speeding', fine: 5500},
-      ],
-    },
-    {
-      id: 3,
-      name: 'Mr Long Bomb',
-      licenseNumber: 'LMN456789',
-      address: 'Pavia, Iloilo',
-      violations: [
-        { id: 1, date: '2024-5-13', description: 'Illegal parking', fine: 11500 },
-      ],
-    },
-  ]);
+import React from 'react';
+import { useViolations } from '../../context/ViolationContext';
 
-  const [selectedDriver, setSelectedDriver] = useState(null);
-
-  const handleDriverClick = (driver) => {
-    setSelectedDriver(driver);
-  };
-
-  const handleBackClick = () => {
-    setSelectedDriver(null);
-  };
+const DriversProfilePage = () => {
+  const { violations } = useViolations();
 
   return (
-    <div className="container">
-      <h1>Drivers Profile</h1>
+    <div
+      style={{
+        padding: '24px',
+        maxWidth: '1200px',
+        margin: '0 auto',
+        backgroundColor: '#2C2F38',
+        color: '#fff',
+        borderRadius: '8px',
+        minHeight: '100vh',
+      }}
+    >
+      <h1 style={{ textAlign: 'center', marginBottom: '24px' }}>Drivers Profile</h1>
 
-      {!selectedDriver ? (
-        <div>
-          {drivers.map(driver => (
-            <div key={driver.id} className="profile" onClick={() => handleDriverClick(driver)}>
-              <h1>{driver.name}</h1>
-              <p><strong>License Number:</strong> {driver.licenseNumber}</p>
-              <p><strong>Address:</strong> {driver.address}</p> 
-            </div>
-          ))}
-        </div>
-      ) : (
-        <div>
-          <button onClick={handleBackClick} className="backButton">Back to Profiles</button>
-          <h2>{selectedDriver.name}</h2>
-          <p><strong>License Number:</strong> {selectedDriver.licenseNumber}</p>
-          <p><strong>Address:</strong> {selectedDriver.address}</p> 
-          <h1>Violation History</h1>
-          <table className="table">
+      <div>
+        {violations.length > 0 ? (
+          <table
+            style={{
+              width: '100%',
+              borderCollapse: 'collapse',
+              backgroundColor: '#1E2126',
+              borderRadius: '8px',
+              overflow: 'hidden',
+            }}
+          >
             <thead>
               <tr>
-                <th>Date</th>
-                <th>Description</th>
-                <th>Fine (₱)</th>
+                <th style={headerStyle}>Violation ID</th>
+                <th style={headerStyle}>Type</th>
+                <th style={headerStyle}>Date</th>
+                <th style={headerStyle}>Amount</th>
+                <th style={headerStyle}>Status</th>
               </tr>
             </thead>
             <tbody>
-              {selectedDriver.violations.map(violation => (
-                <tr key={violation.id}>
-                  <td>{violation.date}</td>
-                  <td>{violation.description}</td>
-                  <td>{violation.fine.toLocaleString()}</td>
+              {violations.map((violation) => (
+                <tr key={violation.id} style={rowStyle}>
+                  <td style={cellStyle}>{violation.id}</td>
+                  <td style={cellStyle}>{violation.type}</td>
+                  <td style={cellStyle}>{violation.date}</td>
+                  <td style={cellStyle}>₱{violation.amount}</td>
+                  <td
+                    style={{
+                      ...cellStyle,
+                      color:
+                        violation.status === 'Paid'
+                          ? '#4CAF50'
+                          : violation.status === 'Pending'
+                          ? '#FF6B6B'
+                          : '#FCA311',
+                    }}
+                  >
+                    {violation.status}
+                  </td>
                 </tr>
               ))}
             </tbody>
           </table>
-          <div className="totalFines">
-            <h3>Total Fines: ₱{selectedDriver.violations.reduce((total, violation) => total + violation.fine, 0).toLocaleString()}</h3>
-          </div>
-        </div>
-      )}
+        ) : (
+          <p style={{ textAlign: 'center', color: '#aaa' }}>
+            No violations recorded.
+          </p>
+        )}
+      </div>
     </div>
   );
 };
 
-export default DriverProfile;
+// Styles
+const headerStyle = {
+  backgroundColor: '#333',
+  color: '#fff',
+  padding: '12px',
+  textAlign: 'left' as const,
+};
+
+const rowStyle = {
+  borderBottom: '1px solid #444',
+};
+
+const cellStyle = {
+  padding: '12px',
+  textAlign: 'left' as const,
+  color: '#ddd',
+};
+
+export default DriversProfilePage;
