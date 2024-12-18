@@ -1,10 +1,17 @@
 'use client';
 
-import React from 'react';
+import React, { useState } from 'react';
 import { useViolations } from '../../context/ViolationContext';
 
 const DriversProfilePage = () => {
   const { violations } = useViolations();
+  const [filter, setFilter] = useState('All');
+
+  // Filtering logic
+  const filteredViolations =
+    filter === 'All'
+      ? violations
+      : violations.filter((violation) => violation.status === filter);
 
   return (
     <div
@@ -20,8 +27,24 @@ const DriversProfilePage = () => {
     >
       <h1 style={{ textAlign: 'center', marginBottom: '24px' }}>Drivers Profile</h1>
 
+      {/* Driver Details Section */}
+      <section
+        style={{
+          marginBottom: '24px',
+          padding: '16px',
+          backgroundColor: '#1E2126',
+          borderRadius: '8px',
+        }}
+      >
+        <h2>Driver Details</h2>
+        <p><strong>Name:</strong> Kwerk ZuckerMusk</p>
+        <p><strong>License Number:</strong> SQW 5963</p>
+        <p><strong>Contact:</strong> 09178547834</p>
+      </section>
+
+      {/* Violation History Section */}
       <div>
-        {violations.length > 0 ? (
+        {filteredViolations.length > 0 ? (
           <table
             style={{
               width: '100%',
@@ -41,7 +64,7 @@ const DriversProfilePage = () => {
               </tr>
             </thead>
             <tbody>
-              {violations.map((violation) => (
+              {filteredViolations.map((violation) => (
                 <tr key={violation.id} style={rowStyle}>
                   <td style={cellStyle}>{violation.id}</td>
                   <td style={cellStyle}>{violation.type}</td>
