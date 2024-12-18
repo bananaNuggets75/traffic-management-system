@@ -1,40 +1,41 @@
-'use client';
-import React, { createContext, useContext, useEffect, useState } from 'react';
-import { db } from '../lib/firebase';
-import { ref, onValue, push, update } from 'firebase/database';
+"use client";
+
+import React, { createContext, useContext, useEffect, useState } from "react";
+import { ref, onValue, update } from "firebase/database";
+import { db } from "../lib/firebase";
 
 const ViolationsContext = createContext();
 
 export const ViolationsProvider = ({ children }) => {
   const [violations, setViolations] = useState([]);
 
+  // Fetch violations from Firebase Realtime Database
   useEffect(() => {
-    const violationsRef = ref(db, 'violations');
+    const violationsRef = ref(db, "violations");
     const unsubscribe = onValue(violationsRef, (snapshot) => {
-      const data = snapshot.val();
-      const violationsArray = data
-        ? Object.entries(data).map(([id, violation]) => ({ id, ...violation }))
-        : [];
+      const data = snapshot.val() || {};
+      const violationsArray = Object.values(data);
       setViolations(violationsArray);
     });
 
-    return () => unsubscribe();
+    return () => unsubscribe(); // Cleanup subscription
   }, []);
 
-  // Add a new violation
-  const addViolation = async (newViolation) => {
-    const violationsRef = ref(db, 'violations');
-    await push(violationsRef, { ...newViolation, status: 'Pending' });
-  };
-
-  // Update an existing violation
-  const updateViolation = async (id, updates) => {
+  // Update a violation's status
+  const updateViolationStatus = async (id, newStatus) => {
     const violationRef = ref(db, `violations/${id}`);
-    await update(violationRef, updates);
+    await update(violationRef, { status: newStatus });
+
+    // Optimistic UI update
+    setViolations((prevViolations) =>
+      prevViolations.map((violation) =>
+        violation.id === id ? { ...violation, status: newStatus } : violation
+      )
+    );
   };
 
   return (
-    <ViolationsContext.Provider value={{ violations, addViolation, updateViolation }}>
+    <ViolationsContext.Provider value={{ violations, updateViolationStatus }}>
       {children}
     </ViolationsContext.Provider>
   );
