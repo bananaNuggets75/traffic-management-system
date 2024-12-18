@@ -42,6 +42,36 @@ const DriversProfilePage = () => {
         <p><strong>Contact:</strong> 09178547834</p>
       </section>
 
+      {/* Filter Section */}
+      <section
+        style={{
+          marginBottom: '24px',
+          padding: '16px',
+          backgroundColor: '#1E2126',
+          borderRadius: '8px',
+        }}
+      >
+        <label htmlFor="filter" style={{ marginRight: '8px' }}>
+          <strong>Filter by Status:</strong>
+        </label>
+        <select
+          id="filter"
+          value={filter}
+          onChange={(e) => setFilter(e.target.value)}
+          style={{
+            padding: '8px',
+            borderRadius: '4px',
+            border: '1px solid #444',
+            backgroundColor: '#2C2F38',
+            color: '#fff',
+          }}
+        >
+          <option value="All">All</option>
+          <option value="Pending">Pending</option>
+          <option value="Paid">Paid</option>
+        </select>
+      </section>
+
       {/* Violation History Section */}
       <div>
         {filteredViolations.length > 0 ? (
