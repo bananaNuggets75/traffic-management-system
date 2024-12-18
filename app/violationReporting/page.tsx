@@ -145,8 +145,8 @@ const ViolationReporting = () => {
           type="submit"
           style={{
             padding: '12px',
-            backgroundColor: '#4ECDC4',
-            color: '#222',
+            backgroundColor: '#6917ce',
+            color: '#fffff',
             fontWeight: 'bold',
             borderRadius: '4px',
             border: 'none',

@@ -3,8 +3,8 @@
   --foreground: #171717;
   --primary-color: #1c1227;
   --hover-color: #000000;
-  --button-green: #14a800;
-  --button-green-hover: #12a400;
+  --button-green: #6917ce;
+  --button-green-hover: #814ae0;
 }
 
 @media (prefers-color-scheme: dark) {

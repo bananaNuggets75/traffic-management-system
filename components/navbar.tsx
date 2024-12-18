@@ -41,7 +41,7 @@ export default function Navbar() {
 
         {/* Right Section: Log In Button */}
         <div className="right-nav">
-          <button className="login-button bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600">
+          <button className="login-button bg-blue-500 text-white px-4 py-2 rounded hover:bg-purple-600">
             <Link href="/login">Log In</Link>
           </button>
         </div>
