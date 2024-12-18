@@ -1,44 +1,38 @@
-"use client";
+'use client';
 
-import React, { createContext, useContext, useEffect, useState } from "react";
-import { ref, onValue, update } from "firebase/database";
-import { db } from "../lib/firebase";
+import React, { createContext, useContext, useState } from 'react';
 
-const ViolationsContext = createContext();
+// Create the context
+const ViolationContext = createContext(undefined);
 
-export const ViolationsProvider = ({ children }) => {
+// Context provider component
+export const ViolationProvider = ({ children }) => {
   const [violations, setViolations] = useState([]);
 
-  // Fetch violations from Firebase Realtime Database
-  useEffect(() => {
-    const violationsRef = ref(db, "violations");
-    const unsubscribe = onValue(violationsRef, (snapshot) => {
-      const data = snapshot.val() || {};
-      const violationsArray = Object.values(data);
-      setViolations(violationsArray);
-    });
+  const addViolation = (violation) => {
+    setViolations((prev) => [...prev, violation]);
+  };
 
-    return () => unsubscribe(); // Cleanup subscription
-  }, []);
-
-  // Update a violation's status
-  const updateViolationStatus = async (id, newStatus) => {
-    const violationRef = ref(db, `violations/${id}`);
-    await update(violationRef, { status: newStatus });
-
-    // Optimistic UI update
-    setViolations((prevViolations) =>
-      prevViolations.map((violation) =>
-        violation.id === id ? { ...violation, status: newStatus } : violation
+  const updateViolationStatus = (id, status) => {
+    setViolations((prev) =>
+      prev.map((violation) =>
+        violation.id === id ? { ...violation, status } : violation
       )
     );
   };
 
   return (
-    <ViolationsContext.Provider value={{ violations, updateViolationStatus }}>
+    <ViolationContext.Provider value={{ violations, addViolation, updateViolationStatus }}>
       {children}
-    </ViolationsContext.Provider>
+    </ViolationContext.Provider>
   );
 };
 
-export const useViolations = () => useContext(ViolationsContext);
+// Hook to use the context
+export const useViolations = () => {
+  const context = useContext(ViolationContext);
+  if (!context) {
+    throw new Error('useViolations must be used within a ViolationProvider');
+  }
+  return context;
+};

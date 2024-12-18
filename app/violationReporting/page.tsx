@@ -14,6 +14,7 @@ const ViolationReporting = () => {
     description: '',
     location: '',
   });
+  const [successMessage, setSuccessMessage] = useState('');
 
   const handleChange = (
     e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>
@@ -42,9 +43,9 @@ const ViolationReporting = () => {
       status: 'Pending',
     });
 
-    // Clear form
+    // Clear form and show success message
     setFormData({ date: '', type: '', amount: '', description: '', location: '' });
-    alert('Violation submitted successfully!');
+    setSuccessMessage('Violation submitted successfully!');
   };
 
   return (
@@ -84,7 +85,9 @@ const ViolationReporting = () => {
             style={{ width: '100%', padding: '8px', borderRadius: '4px', border: 'none' }}
             required
           >
-            <option value="">Select a type</option>
+            <option value="" disabled>
+              -- Select Violation Type --
+            </option>
             <option value="Running Red Light">Running Red Light</option>
             <option value="Illegal Parking">Illegal Parking</option>
             <option value="Overspeeding">Overspeeding</option>
@@ -118,6 +121,7 @@ const ViolationReporting = () => {
             placeholder="Enter fine amount"
             style={{ width: '100%', padding: '8px', borderRadius: '4px', border: 'none' }}
             required
+            step="1"
           />
         </div>
 
@@ -146,7 +150,7 @@ const ViolationReporting = () => {
           style={{
             padding: '12px',
             backgroundColor: '#6917ce',
-            color: '#fffff',
+            color: '#ffffff',
             fontWeight: 'bold',
             borderRadius: '4px',
             border: 'none',
@@ -157,6 +161,13 @@ const ViolationReporting = () => {
           Submit Violation
         </button>
       </form>
+
+      {/* Success Message */}
+      {successMessage && (
+        <p style={{ color: '#4CAF50', textAlign: 'center', marginTop: '16px' }}>
+          {successMessage}
+        </p>
+      )}
     </div>
   );
 };
