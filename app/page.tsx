@@ -2,7 +2,6 @@
 
 import React, { useState, useEffect } from 'react';
 import { Bar, Pie } from 'react-chartjs-2';
-import dynamic from 'next/dynamic';
 import { useViolations } from '../context/ViolationContext';
 import {
   Chart as ChartJS,
@@ -59,6 +58,18 @@ const Dashboard = () => {
 
     return () => clearInterval(interval);
   }, []);
+
+  const tableHeaderStyle: React.CSSProperties = {
+    textAlign: 'left',
+    padding: '8px',
+    borderBottom: '2px solid #444',
+    fontWeight: 'bold',
+  };
+
+  const tableCellStyle: React.CSSProperties = {
+    padding: '8px',
+    textAlign: 'left',
+  };
 
   return (
     <div
@@ -126,6 +137,46 @@ const Dashboard = () => {
               Paid Violations: {statusCounts.Paid} | Pending Violations: {statusCounts.Pending}
             </li>
           </ul>
+        </div>
+
+        {/* Recent Violations Table */}
+        <div
+          style={{
+            backgroundColor: '#222',
+            padding: '24px',
+            borderRadius: '8px',
+            boxShadow: '0 4px 8px rgba(255, 255, 255, 0.1)',
+          }}
+        >
+          <h2 style={{ marginBottom: '16px' }}>Recent Violations</h2>
+          <table style={{ width: '100%', borderCollapse: 'collapse', color: '#fff' }}>
+            <thead>
+              <tr>
+                <th style={tableHeaderStyle}>Date</th>
+                <th style={tableHeaderStyle}>Type</th>
+                <th style={tableHeaderStyle}>Location</th>
+                <th style={tableHeaderStyle}>Severity</th>
+              </tr>
+            </thead>
+            <tbody>
+              {violations.slice(0, 7).map((violation) => (
+                <tr key={violation.id} style={{ borderTop: '1px solid #444' }}>
+                  <td style={tableCellStyle}>{violation.date}</td>
+                  <td style={tableCellStyle}>{violation.type}</td>
+                  <td style={tableCellStyle}>{violation.location || 'N/A'}</td>
+                  <td style={tableCellStyle}>
+                    <span
+                      style={{
+                        color: violation.type === 'Illegal Parking' ? '#00cfcf' : '#FF6B6B',
+                      }}
+                    >
+                      {violation.type === 'Illegal Parking' ? 'Low' : 'High'}
+                    </span>
+                  </td>
+                </tr>
+              ))}
+            </tbody>
+          </table>
         </div>
       </div>
 
