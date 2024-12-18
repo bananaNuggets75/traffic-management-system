@@ -3,7 +3,7 @@
 import React, { useState } from 'react';
 import { useViolations } from '../../context/ViolationContext';
 
-const ViolationReporting = () => {
+const ViolationReporting: React.FC = () => {
   const { addViolation } = useViolations();
 
   // Local state for form inputs
@@ -23,7 +23,7 @@ const ViolationReporting = () => {
     setFormData((prev) => ({ ...prev, [name]: value }));
   };
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
 
     // Simple validation
@@ -32,20 +32,23 @@ const ViolationReporting = () => {
       return;
     }
 
-    // Add violation to context
-    addViolation({
-      id: Date.now(),
-      date: formData.date,
-      type: formData.type,
-      amount: parseFloat(formData.amount),
-      description: formData.description,
-      location: formData.location,
-      status: 'Pending',
-    });
+    try {
+      // Add violation to Firebase
+      await addViolation({
+        date: formData.date,
+        type: formData.type,
+        amount: parseFloat(formData.amount),
+        description: formData.description || '',
+        location: formData.location,
+      });
 
-    // Clear form and show success message
-    setFormData({ date: '', type: '', amount: '', description: '', location: '' });
-    setSuccessMessage('Violation submitted successfully!');
+      // Clear form and show success message
+      setFormData({ date: '', type: '', amount: '', description: '', location: '' });
+      setSuccessMessage('Violation submitted successfully!');
+    } catch (error) {
+      console.error('Error submitting violation:', error);
+      alert('An error occurred while submitting the violation. Please try again.');
+    }
   };
 
   return (

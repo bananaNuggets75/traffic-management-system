@@ -1,38 +1,53 @@
 'use client';
 
-import React, { createContext, useContext, useState } from 'react';
+import React, { createContext, useContext, useEffect, useState } from 'react';
+import { ref, onValue, push, update } from 'firebase/database';
+import { database } from '../lib/firebase'; // Ensure this import is correct
 
-// Create the context
-const ViolationContext = createContext(undefined);
+const ViolationsContext = createContext(undefined);
 
-// Context provider component
-export const ViolationProvider = ({ children }) => {
+export const ViolationsProvider = ({ children }) => {
   const [violations, setViolations] = useState([]);
 
-  const addViolation = (violation) => {
-    setViolations((prev) => [...prev, violation]);
+  useEffect(() => {
+    // Verify the database object
+    console.log('Database instance:', database);
+
+    const violationsRef = ref(database, 'violations');
+
+    const unsubscribe = onValue(violationsRef, (snapshot) => {
+      const data = snapshot.val();
+      const violationsArray = data
+        ? Object.entries(data).map(([key, violation]) => ({ id: key, ...violation }))
+        : [];
+      setViolations(violationsArray);
+    });
+
+    return () => unsubscribe();
+  }, []);
+
+  const addViolation = async (newViolation) => {
+    const violationsRef = ref(database, 'violations');
+    const newViolationRef = push(violationsRef);
+    await update(newViolationRef, { ...newViolation, status: 'Pending' });
   };
 
-  const updateViolationStatus = (id, status) => {
-    setViolations((prev) =>
-      prev.map((violation) =>
-        violation.id === id ? { ...violation, status } : violation
-      )
-    );
+  const updateViolationStatus = async (id, status) => {
+    const statusRef = ref(database, `violations/${id}`);
+    await update(statusRef, { status });
   };
 
   return (
-    <ViolationContext.Provider value={{ violations, addViolation, updateViolationStatus }}>
+    <ViolationsContext.Provider value={{ violations, addViolation, updateViolationStatus }}>
       {children}
-    </ViolationContext.Provider>
+    </ViolationsContext.Provider>
   );
 };
 
-// Hook to use the context
 export const useViolations = () => {
-  const context = useContext(ViolationContext);
+  const context = useContext(ViolationsContext);
   if (!context) {
-    throw new Error('useViolations must be used within a ViolationProvider');
+    throw new Error('useViolations must be used within a ViolationsProvider');
   }
   return context;
 };
