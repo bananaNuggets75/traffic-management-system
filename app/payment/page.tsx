@@ -1,11 +1,10 @@
 'use client';
-import React from 'react'
+import React, { useState } from 'react';
 import styles from '../page.module.css';
 
-const ViolationTable = ({ violations }) => {
+const ViolationTable = ({ violations, onPayFine }) => {
   return (
     <div>
-      
       <table>
         <thead>
           <tr>
@@ -24,13 +23,19 @@ const ViolationTable = ({ violations }) => {
               <td>{violation.type}</td>
               <td>{violation.date}</td>
               <td>{violation.amount}</td>
-              <td>{violation.status}</td>
               <td>
-                
-                  <button>
+                <span className={violation.status === 'Paid' ? styles.paid : styles.pending}>
+                  {violation.status}
+                </span>
+              </td>
+              <td>
+                {violation.status === 'Pending' ? (
+                  <button onClick={() => onPayFine(violation.id)}>
                     Pay Now
                   </button>
-                
+                ) : (
+                  <span>Paid</span>
+                )}
               </td>
             </tr>
           ))}
@@ -47,17 +52,24 @@ const ViolationTable = ({ violations }) => {
           border: 1px solid #ddd;
         }
         th {
-          background-color:rgb(0, 0, 0);
+          background-color: rgb(0, 0, 0);
+          color: white;
         }
         button {
-          background-color:rgb(14, 114, 138);
+          background-color: rgb(14, 114, 138);
           color: white;
           border: none;
           padding: 10px;
           cursor: pointer;
         }
         button:hover {
-          background-color:rgb(97, 167, 220);
+          background-color: rgb(97, 167, 220);
+        }
+        .${styles.pending} {
+          color: red;
+        }
+        .${styles.paid} {
+          color: green;
         }
       `}</style>
     </div>
@@ -65,19 +77,21 @@ const ViolationTable = ({ violations }) => {
 };
 
 export default function PaymentPage() {
-  const violations = [
+  const [violations, setViolations] = useState([
     { id: 12345, type: 'Speeding', date: '2024-12-10', amount: '₱1500.00', status: 'Pending' },
     { id: 67890, type: 'Parking', date: '2024-12-12', amount: '₱500.00', status: 'Paid' },
-  ];
+  ]);
 
-  return <div className={styles.page}>
+  const handlePayFine = (id) => {
+    setViolations(violations.map(violation => 
+      violation.id === id ? { ...violation, status: 'Paid' } : violation
+    ));
+  };
 
-  <h1>Traffic Violations</h1>
-  <ViolationTable violations={violations} />
-      
-      
-      
+  return (
+    <div className={styles.page}>
+      <h1>Traffic Violations</h1>
+      <ViolationTable violations={violations} onPayFine={handlePayFine} />
     </div>
-   
-  
+  );
 }
