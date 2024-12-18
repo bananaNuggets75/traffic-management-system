@@ -1,5 +1,5 @@
 <div align="center">
-  <img src="https://github.com/bananaNuggets75/traffic-management-system/blob/main/public/SafeDrive-logo.png" alt="logo">
+  <img src="https://github.com/bananaNuggets75/traffic-management-system/blob/main/public/SafeDrive-logo.png" alt="logo" width="80" height="80>
   <h3 align="center">SafeDrive</h3>
   <p align="center">
     <h4 align="center"> Web-based system for a traffic regulatory department</h4>
