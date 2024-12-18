@@ -1,10 +1,15 @@
 'use client';
 
-import React from 'react';
+import React, { useState } from 'react';
 import { useViolations } from '../../context/ViolationContext';
 
 const DriversProfilePage = () => {
   const { violations } = useViolations();
+  const [filter, setFilter] = useState('All');
+
+  // Filter violations based on selected status
+  const filteredViolations =
+    filter === 'All' ? violations : violations.filter((v) => v.status === filter);
 
   return (
     <div
@@ -22,8 +27,60 @@ const DriversProfilePage = () => {
         Drivers Profile and Violation History
       </h1>
 
+      {/* Driver Details Section */}
+      <section
+        style={{
+          marginBottom: '24px',
+          padding: '16px',
+          backgroundColor: '#1E2126',
+          borderRadius: '8px',
+        }}
+      >
+        <h2>Driver Details</h2>
+        <p>
+          <strong>Name:</strong> Kwerk ZuckerMusk
+        </p>
+        <p>
+          <strong>License Number:</strong> SQW 5963
+        </p>
+        <p>
+          <strong>Contact:</strong> 09178547834
+        </p>
+      </section>
+
+      {/* Filter Section */}
+      <section
+        style={{
+          marginBottom: '24px',
+          padding: '16px',
+          backgroundColor: '#1E2126',
+          borderRadius: '8px',
+        }}
+      >
+        <label htmlFor="filter" style={{ marginRight: '8px' }}>
+          <strong>Filter by Status:</strong>
+        </label>
+        <select
+          id="filter"
+          value={filter}
+          onChange={(e) => setFilter(e.target.value)}
+          style={{
+            padding: '8px',
+            borderRadius: '4px',
+            border: '1px solid #444',
+            backgroundColor: '#2C2F38',
+            color: '#fff',
+          }}
+        >
+          <option value="All">All</option>
+          <option value="Pending">Pending</option>
+          <option value="Paid">Paid</option>
+        </select>
+      </section>
+
+      {/* Violation Table */}
       <div>
-        {violations.length > 0 ? (
+        {filteredViolations.length > 0 ? (
           <table
             style={{
               width: '100%',
@@ -43,26 +100,31 @@ const DriversProfilePage = () => {
               </tr>
             </thead>
             <tbody>
-  {violations
-    .filter((violation) => violation.id && violation.type && violation.date && violation.amount) // Filter valid data
-    .map((violation) => (
-      <tr key={violation.id} style={rowStyle}>
-        <td style={cellStyle}>{violation.id}</td>
-        <td style={cellStyle}>{violation.type}</td>
-        <td style={cellStyle}>{violation.date}</td>
-        <td style={cellStyle}>₱{violation.amount}</td>
-        <td
-          style={{
-            ...cellStyle,
-            color: violation.status === "Paid" ? "#4CAF50" : "#FF6B6B",
-          }}
-        >
-          {violation.status}
-        </td>
-      </tr>
-    ))}
-</tbody>
-
+              {filteredViolations
+                .filter(
+                  (violation) =>
+                    violation.id &&
+                    violation.type &&
+                    violation.date &&
+                    violation.amount
+                ) // Filter valid data
+                .map((violation) => (
+                  <tr key={violation.id} style={rowStyle}>
+                    <td style={cellStyle}>{violation.id}</td>
+                    <td style={cellStyle}>{violation.type}</td>
+                    <td style={cellStyle}>{violation.date}</td>
+                    <td style={cellStyle}>₱{violation.amount}</td>
+                    <td
+                      style={{
+                        ...cellStyle,
+                        color: violation.status === 'Paid' ? '#4CAF50' : '#FF6B6B',
+                      }}
+                    >
+                      {violation.status}
+                    </td>
+                  </tr>
+                ))}
+            </tbody>
           </table>
         ) : (
           <p style={{ textAlign: 'center', color: '#aaa' }}>
