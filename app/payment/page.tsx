@@ -1,83 +1,86 @@
 'use client';
-import React from 'react'
-import styles from '../page.module.css';
 
-const ViolationTable = ({ violations }) => {
+import React from 'react';
+import { useViolations } from '../../context/ViolationContext';
+
+const PaymentPage = () => {
+  const { violations, setViolations } = useViolations();
+
+  const handlePayment = (id: number) => {
+    setViolations((prevViolations) =>
+      prevViolations.map((violation) =>
+        violation.id === id ? { ...violation, status: 'Paid' } : violation
+      )
+    );
+    alert('Payment successful! The violation status has been updated.');
+  };
+
   return (
-    <div>
+    <div style={{ padding: '24px', maxWidth: '800px', margin: '0 auto', backgroundColor: '#2C2F38', color: '#fff', borderRadius: '8px' }}>
+      <h1 style={{ textAlign: 'center', marginBottom: '24px' }}>Payment Page</h1>
       
-      <table>
-        <thead>
-          <tr>
-            <th>Violation ID</th>
-            <th>Violation Type</th>
-            <th>Date</th>
-            <th>Fine Amount</th>
-            <th>Status</th>
-            <th>Action</th>
-          </tr>
-        </thead>
-        <tbody>
-          {violations.map((violation) => (
-            <tr key={violation.id}>
-              <td>{violation.id}</td>
-              <td>{violation.type}</td>
-              <td>{violation.date}</td>
-              <td>{violation.amount}</td>
-              <td>{violation.status}</td>
-              <td>
-                
-                  <button>
-                    Pay Now
-                  </button>
-                
-              </td>
-            </tr>
-          ))}
-        </tbody>
-      </table>
-      <style jsx>{`
-        table {
-          width: 100%;
-          border-collapse: collapse;
-        }
-        th, td {
-          padding: 8px;
-          text-align: left;
-          border: 1px solid #ddd;
-        }
-        th {
-          background-color:rgb(0, 0, 0);
-        }
-        button {
-          background-color:rgb(14, 114, 138);
-          color: white;
-          border: none;
-          padding: 10px;
-          cursor: pointer;
-        }
-        button:hover {
-          background-color:rgb(97, 167, 220);
-        }
-      `}</style>
+      <div>
+        {violations.length > 0 ? (
+          violations.map((violation) => (
+            <div
+              key={violation.id}
+              style={{
+                backgroundColor: '#1E2126',
+                padding: '16px',
+                marginBottom: '16px',
+                borderRadius: '8px',
+                display: 'flex',
+                justifyContent: 'space-between',
+                alignItems: 'center',
+              }}
+            >
+              <div>
+                <p>
+                  <strong>Violation Type:</strong> {violation.type}
+                </p>
+                <p>
+                  <strong>Date:</strong> {violation.date}
+                </p>
+                <p>
+                  <strong>Fine Amount:</strong> ₱{violation.amount}
+                </p>
+                <p>
+                  <strong>Status:</strong>{' '}
+                  <span
+                    style={{
+                      color: violation.status === 'Paid' ? '#4CAF50' : '#FF6B6B',
+                    }}
+                  >
+                    {violation.status}
+                  </span>
+                </p>
+              </div>
+              {violation.status === 'Pending' && (
+                <button
+                  onClick={() => handlePayment(violation.id)}
+                  style={{
+                    backgroundColor: '#FF6B6B',
+                    color: '#fff',
+                    padding: '10px 16px',
+                    border: 'none',
+                    borderRadius: '4px',
+                    cursor: 'pointer',
+                    fontSize: '16px',
+                  }}
+                >
+                  Pay Now
+                </button>
+              )}
+            </div>
+          ))
+        ) : (
+          <p style={{ textAlign: 'center', color: '#aaa' }}>
+            No violations found. All dues are clear!
+          </p>
+        )}
+      </div>
     </div>
   );
 };
 
-export default function PaymentPage() {
-  const violations = [
-    { id: 12345, type: 'Speeding', date: '2024-12-10', amount: '₱1500.00', status: 'Pending' },
-    { id: 67890, type: 'Parking', date: '2024-12-12', amount: '₱500.00', status: 'Paid' },
-  ];
-
-  return <div className={styles.page}>
-
-  <h1>Traffic Violations</h1>
-  <ViolationTable violations={violations} />
-      
-      
-      
-    </div>
-   
-  
-}
+export default PaymentPage;
