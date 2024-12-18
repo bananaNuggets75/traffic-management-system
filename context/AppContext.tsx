@@ -1,6 +1,5 @@
 import React, { createContext, useContext, useState, ReactNode } from "react";
 
-// Define Types
 type Violation = {
   date: string;
   description: string;
