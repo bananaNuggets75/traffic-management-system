@@ -1,4 +1,5 @@
 <div align="center">
+  <img src="https://github.com/bananaNuggets75/traffic-management-system/blob/main/public/SafeDrive-logo.png" alt="logo">
   <h3 align="center">SafeDrive</h3>
   <p align="center">
     <h4 align="center"> Web-based system for a traffic regulatory department</h4>
@@ -71,7 +72,7 @@ npm install chart.js@3.9.1
 <div>
   <!-- SCREENSHOTS -->
   <h2>Gallery</h2>
-  <h3>Peoject Screenshots</h3>
+  <h3>Project Screenshots</h3>
 
   <h4>Homepage</h4>
     <img src="https://github.com/bananaNuggets75/traffic-management-system/blob/main/public/screenshots/homepage.png" alt="homepage">
