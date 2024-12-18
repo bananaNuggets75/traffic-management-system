@@ -17,7 +17,7 @@ export const ViolationsProvider = ({ children }) => {
   };
 
   return (
-    <ViolationsContext.Provider value={{ violations, addViolation }}>
+    <ViolationsContext.Provider value={{ violations, setViolations, addViolation }}>
       {children}
     </ViolationsContext.Provider>
   );

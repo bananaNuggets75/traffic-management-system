@@ -85,6 +85,7 @@ const ViolationReporting = () => {
             required
           >
             <option value="">Select a type</option>
+            <option value="Running Red Light">Running Red Light</option>
             <option value="Illegal Parking">Illegal Parking</option>
             <option value="Overspeeding">Overspeeding</option>
             <option value="Signal Violation">Signal Violation</option>
