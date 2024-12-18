@@ -163,7 +163,7 @@ const Dashboard = () => {
                 <tr key={violation.id} style={{ borderTop: '1px solid #444' }}>
                   <td style={tableCellStyle}>{violation.date}</td>
                   <td style={tableCellStyle}>{violation.type}</td>
-                  <td style={tableCellStyle}>{violation.location || 'N/A'}</td>
+                  <td style={tableCellStyle}>{violation.location || 'Lapaz'}</td>
                   <td style={tableCellStyle}>
                     <span
                       style={{

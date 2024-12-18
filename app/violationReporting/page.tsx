@@ -6,14 +6,18 @@ import { useViolations } from '../../context/ViolationContext';
 const ViolationReporting = () => {
   const { addViolation } = useViolations();
 
+  // Local state for form inputs
   const [formData, setFormData] = useState({
     date: '',
     type: '',
     amount: '',
     description: '',
+    location: '',
   });
 
-  const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>) => {
+  const handleChange = (
+    e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>
+  ) => {
     const { name, value } = e.target;
     setFormData((prev) => ({ ...prev, [name]: value }));
   };
@@ -22,7 +26,7 @@ const ViolationReporting = () => {
     e.preventDefault();
 
     // Simple validation
-    if (!formData.date || !formData.type || !formData.amount) {
+    if (!formData.date || !formData.type || !formData.amount || !formData.location) {
       alert('Please fill in all required fields.');
       return;
     }
@@ -34,11 +38,12 @@ const ViolationReporting = () => {
       type: formData.type,
       amount: parseFloat(formData.amount),
       description: formData.description,
+      location: formData.location,
       status: 'Pending',
     });
 
     // Clear form
-    setFormData({ date: '', type: '', amount: '', description: '' });
+    setFormData({ date: '', type: '', amount: '', description: '', location: '' });
     alert('Violation submitted successfully!');
   };
 
@@ -85,6 +90,20 @@ const ViolationReporting = () => {
             <option value="Signal Violation">Signal Violation</option>
             <option value="Reckless Driving">Reckless Driving</option>
           </select>
+        </div>
+
+        {/* Location */}
+        <div>
+          <label>Location:</label>
+          <input
+            type="text"
+            name="location"
+            value={formData.location}
+            onChange={handleChange}
+            placeholder="Enter the location of the violation"
+            style={{ width: '100%', padding: '8px', borderRadius: '4px', border: 'none' }}
+            required
+          />
         </div>
 
         {/* Fine Amount */}
