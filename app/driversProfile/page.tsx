@@ -43,28 +43,26 @@ const DriversProfilePage = () => {
               </tr>
             </thead>
             <tbody>
-              {violations.map((violation) => (
-                <tr key={violation.id || Math.random()} style={rowStyle}>
-                  <td style={cellStyle}>{violation.id}</td>
-                  <td style={cellStyle}>{violation.type}</td>
-                  <td style={cellStyle}>{violation.date}</td>
-                  <td style={cellStyle}>₱{violation.amount}</td>
-                  <td
-                    style={{
-                      ...cellStyle,
-                      color:
-                        violation.status === 'Paid'
-                          ? '#4CAF50'
-                          : violation.status === 'Pending'
-                          ? '#FF6B6B'
-                          : '#FCA311',
-                    }}
-                  >
-                    {violation.status}
-                  </td>
-                </tr>
-              ))}
-            </tbody>
+  {violations
+    .filter((violation) => violation.id && violation.type && violation.date && violation.amount) // Filter valid data
+    .map((violation) => (
+      <tr key={violation.id} style={rowStyle}>
+        <td style={cellStyle}>{violation.id}</td>
+        <td style={cellStyle}>{violation.type}</td>
+        <td style={cellStyle}>{violation.date}</td>
+        <td style={cellStyle}>₱{violation.amount}</td>
+        <td
+          style={{
+            ...cellStyle,
+            color: violation.status === "Paid" ? "#4CAF50" : "#FF6B6B",
+          }}
+        >
+          {violation.status}
+        </td>
+      </tr>
+    ))}
+</tbody>
+
           </table>
         ) : (
           <p style={{ textAlign: 'center', color: '#aaa' }}>
