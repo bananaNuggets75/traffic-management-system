@@ -1,7 +1,7 @@
 'use client';
 import React, { createContext, useContext, useEffect, useState } from 'react';
-import { collection, getDocs, addDoc, updateDoc, doc } from 'firebase/firestore';
-import { db } from '../lib/firebaseConfig';
+import { db } from '../lib/firebase';
+import { ref, onValue, push, update } from 'firebase/database';
 
 const ViolationsContext = createContext();
 
@@ -9,30 +9,28 @@ export const ViolationsProvider = ({ children }) => {
   const [violations, setViolations] = useState([]);
 
   useEffect(() => {
-    const fetchViolations = async () => {
-      const violationsRef = collection(db, 'violations');
-      const snapshot = await getDocs(violationsRef);
-      const data = snapshot.docs.map((doc) => ({ id: doc.id, ...doc.data() }));
-      setViolations(data);
-    };
+    const violationsRef = ref(db, 'violations');
+    const unsubscribe = onValue(violationsRef, (snapshot) => {
+      const data = snapshot.val();
+      const violationsArray = data
+        ? Object.entries(data).map(([id, violation]) => ({ id, ...violation }))
+        : [];
+      setViolations(violationsArray);
+    });
 
-    fetchViolations();
+    return () => unsubscribe();
   }, []);
 
+  // Add a new violation
   const addViolation = async (newViolation) => {
-    const violationsRef = collection(db, 'violations');
-    const docRef = await addDoc(violationsRef, newViolation);
-    setViolations((prev) => [...prev, { id: docRef.id, ...newViolation }]);
+    const violationsRef = ref(db, 'violations');
+    await push(violationsRef, { ...newViolation, status: 'Pending' });
   };
 
+  // Update an existing violation
   const updateViolation = async (id, updates) => {
-    const violationDoc = doc(db, 'violations', id);
-    await updateDoc(violationDoc, updates);
-    setViolations((prev) =>
-      prev.map((violation) =>
-        violation.id === id ? { ...violation, ...updates } : violation
-      )
-    );
+    const violationRef = ref(db, `violations/${id}`);
+    await update(violationRef, updates);
   };
 
   return (
