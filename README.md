@@ -1,3 +1,16 @@
+<div align="center">
+  <h3 align="center">SafeDrive</h3>
+  <p align="center">
+    <h4 align="center"> Web-based system for a traffic regulatory department</h4>
+    <br />
+    ·
+    <a href="https://github.com/bananaNuggets75/traffic-mamangement-system/issues">Report Bug</a>
+    ·
+    <a href="https://github.com/bananaNuggets75/traffic-mamangement-system/issues">Request Feature</a>
+  </p>
+</div>
+
+
 This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
 
 ## Getting Started
