@@ -1,8 +1,48 @@
 'use client';
 
-import React from "react";
+import React, { useState } from "react";
+import { database } from "../../lib/firebaseConfig";  // import Firebase config
+import { ref, set } from "firebase/database";  // Realtime DB methods
 
 export default function ViolationReporting() {
+  const [violationType, setViolationType] = useState("");
+  const [description, setDescription] = useState("");
+  const [location, setLocation] = useState("");
+  const [date, setDate] = useState("");
+  const [attachment, setAttachment] = useState(null);
+
+  const handleSubmit = (e) => {
+    e.preventDefault();
+
+    // Create a new record for the violation
+    const violationId = new Date().getTime();  // Use timestamp as unique ID
+    const violationRef = ref(database, 'violations/' + violationId);  // Reference to the DB
+
+    // Prepare data to be saved
+    const violationData = {
+      violationType,
+      description,
+      location,
+      date,
+      attachment: attachment ? attachment.name : null,  // Optional field for the file name
+    };
+
+    // Push data to Firebase
+    set(violationRef, violationData)
+      .then(() => {
+        alert("Violation reported successfully!");
+        // Reset form fields after submission
+        setViolationType("");
+        setDescription("");
+        setLocation("");
+        setDate("");
+        setAttachment(null);
+      })
+      .catch((error) => {
+        alert("Error reporting violation: " + error.message);
+      });
+  };
+
   return (
     <div className="container-violation">
       <header className="header">
@@ -15,10 +55,16 @@ export default function ViolationReporting() {
       <main className="main">
         <section className="reportForm">
           <h2>Submit a Violation</h2>
-          <form>
+          <form onSubmit={handleSubmit}>
             <div className="formGroup">
               <label htmlFor="violationType">Violation Type:</label>
-              <select id="violationType" name="violationType" required>
+              <select
+                id="violationType"
+                name="violationType"
+                value={violationType}
+                onChange={(e) => setViolationType(e.target.value)}
+                required
+              >
                 <option value="">Select a type</option>
                 <option value="illegalParking">Illegal Parking</option>
                 <option value="recklessDriving">Reckless Driving</option>
@@ -37,12 +83,13 @@ export default function ViolationReporting() {
               </select>
             </div>
 
-
             <div className="formGroup">
               <label htmlFor="description">Description:</label>
               <textarea
                 id="description"
                 name="description"
+                value={description}
+                onChange={(e) => setDescription(e.target.value)}
                 rows={4}
                 placeholder="Provide details about the violation"
                 required
@@ -55,6 +102,8 @@ export default function ViolationReporting() {
                 type="text"
                 id="location"
                 name="location"
+                value={location}
+                onChange={(e) => setLocation(e.target.value)}
                 placeholder="Enter the location of the violation"
                 required
               />
@@ -62,12 +111,24 @@ export default function ViolationReporting() {
 
             <div className="formGroup">
               <label htmlFor="date">Date and Time:</label>
-              <input type="datetime-local" id="date" name="date" required />
+              <input
+                type="datetime-local"
+                id="date"
+                name="date"
+                value={date}
+                onChange={(e) => setDate(e.target.value)}
+                required
+              />
             </div>
 
             <div className="formGroup">
               <label htmlFor="attachment">Attach Evidence (Optional):</label>
-              <input type="file" id="attachment" name="attachment" />
+              <input
+                type="file"
+                id="attachment"
+                name="attachment"
+                onChange={(e) => setAttachment(e.target.files[0])}
+              />
             </div>
 
             <button type="submit" className="submitButton">
