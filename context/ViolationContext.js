@@ -1,23 +1,42 @@
 'use client';
-import React, { createContext, useContext, useState } from 'react';
+import React, { createContext, useContext, useEffect, useState } from 'react';
+import { collection, getDocs, addDoc, updateDoc, doc } from 'firebase/firestore';
+import { db } from '../lib/firebaseConfig';
 
 const ViolationsContext = createContext();
 
 export const ViolationsProvider = ({ children }) => {
-  const [violations, setViolations] = useState([
-    { id: 12345, type: 'Speeding', date: '2024-12-10', amount: '1500.00', status: 'Pending' },
-    { id: 67890, type: 'Illegal Parking', date: '2024-12-12', amount: '500.00', status: 'Paid' },
-  ]);
+  const [violations, setViolations] = useState([]);
 
-  const addViolation = (newViolation) => {
-    setViolations((prevViolations) => [
-      ...prevViolations,
-      { id: Date.now(), ...newViolation, status: 'Pending' },
-    ]);
+  useEffect(() => {
+    const fetchViolations = async () => {
+      const violationsRef = collection(db, 'violations');
+      const snapshot = await getDocs(violationsRef);
+      const data = snapshot.docs.map((doc) => ({ id: doc.id, ...doc.data() }));
+      setViolations(data);
+    };
+
+    fetchViolations();
+  }, []);
+
+  const addViolation = async (newViolation) => {
+    const violationsRef = collection(db, 'violations');
+    const docRef = await addDoc(violationsRef, newViolation);
+    setViolations((prev) => [...prev, { id: docRef.id, ...newViolation }]);
+  };
+
+  const updateViolation = async (id, updates) => {
+    const violationDoc = doc(db, 'violations', id);
+    await updateDoc(violationDoc, updates);
+    setViolations((prev) =>
+      prev.map((violation) =>
+        violation.id === id ? { ...violation, ...updates } : violation
+      )
+    );
   };
 
   return (
-    <ViolationsContext.Provider value={{ violations, setViolations, addViolation }}>
+    <ViolationsContext.Provider value={{ violations, addViolation, updateViolation }}>
       {children}
     </ViolationsContext.Provider>
   );
