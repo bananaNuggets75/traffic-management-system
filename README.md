@@ -4,9 +4,9 @@
     <h4 align="center"> Web-based system for a traffic regulatory department</h4>
     <br />
     ·
-    <a href="https://github.com/bananaNuggets75/traffic-mamangement-system/issues">Report Bug</a>
+    <a href="https://github.com/bananaNuggets75/traffic-management-system/issues">Report Bug</a>
     ·
-    <a href="https://github.com/bananaNuggets75/traffic-mamangement-system/issues">Request Feature</a>
+    <a href="https://github.com/bananaNuggets75/traffic-management-system/issues">Request Feature</a>
   </p>
 </div>
 
@@ -67,4 +67,31 @@ npm install react-chartjs-2@latest chart.js@latest
 # and
 npm install chart.js@3.9.1
 ```
+
+<div>
+  <!-- SCREENSHOTS -->
+  <h2>Gallery</h2>
+  <h3>Peoject Screenshots</h3>
+
+  <h4>Homepage</h4>
+    <img src="https://github.com/bananaNuggets75/traffic-management-system/blob/main/public/screenshots/homepage.png" alt="homepage">
+  <br><br>
+
+  <h4>Fine Management and Payment</h4>
+    <img src="https://github.com/bananaNuggets75/traffic-management-system/blob/main/public/screenshots/payment.png" alt="payment">
+  <br><br>
+  
+  <h4>Drivers Profile and Violation History</h4>
+    <img src="https://github.com/bananaNuggets75/traffic-management-system/blob/main/public/screenshots/driversprofile.png" alt="driversprofile">
+  <br><br>
+
+  <h4>Violation and Reporting</h4>
+   <img src="https://github.com/bananaNuggets75/traffic-management-system/blob/main/public/screenshots/violation.png" alt="violation">
+  <br><br>
+  
+  <h4>Log-in</h4>
+   <img src="https://github.com/bananaNuggets75/traffic-management-system/blob/main/public/screenshots/login.png" alt="login">
+  <br><br>
+</div>
+
 
