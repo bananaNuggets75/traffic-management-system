@@ -1,6 +1,6 @@
 <div align="center">
   <a href="https://github.com/bananaNuggets75/traffic-management-system/">
-    <img src="https://github.com/bananaNuggets75/traffic-management-system/blob/main/public/SafeDrive-logo.png" alt="Logo" width="80" height="80">
+    <img src="https://github.com/bananaNuggets75/traffic-management-system/blob/main/public/SafeDrive-logo.png" alt="Logo" width="90" height="90">
   </a>
 
   <h3 align="center">SafeDrive</h3>
@@ -78,7 +78,7 @@ npm install chart.js@3.9.1
   <h3>Project Screenshots</h3>
 
   <h4>Homepage</h4>
-    <img src="https://github.com/bananaNuggets75/traffic-management-system/blob/main/public/screenshots/homepage.png" alt="homepage">
+    <img src="https://github.com/bananaNuggets75/traffic-management-system/blob/main/public/screenshots/homepage2.png" alt="homepage">
   <br><br>
 
   <h4>Fine Management and Payment</h4>
@@ -86,15 +86,15 @@ npm install chart.js@3.9.1
   <br><br>
   
   <h4>Drivers Profile and Violation History</h4>
-    <img src="https://github.com/bananaNuggets75/traffic-management-system/blob/main/public/screenshots/driversprofile.png" alt="driversprofile">
+    <img src="https://github.com/bananaNuggets75/traffic-management-system/blob/main/public/screenshots/driversprofile2.png" alt="driversprofile">
   <br><br>
 
   <h4>Violation and Reporting</h4>
-   <img src="https://github.com/bananaNuggets75/traffic-management-system/blob/main/public/screenshots/violation.png" alt="violation">
+   <img src="https://github.com/bananaNuggets75/traffic-management-system/blob/main/public/screenshots/violation2.png" alt="violation">
   <br><br>
   
   <h4>Log-in</h4>
-   <img src="https://github.com/bananaNuggets75/traffic-management-system/blob/main/public/screenshots/login.png" alt="login">
+   <img src="https://github.com/bananaNuggets75/traffic-management-system/blob/main/public/screenshots/login2.png" alt="login">
   <br><br>
 </div>
 
