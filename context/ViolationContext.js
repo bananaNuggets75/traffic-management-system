@@ -73,3 +73,5 @@ export const useViolations = () => {
   }
   return context;
 };
+
+export const useViolationContext = () => useContext(ViolationContext);
