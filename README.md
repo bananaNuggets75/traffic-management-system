@@ -63,7 +63,7 @@ cd traffic-management-system
 Then run these commands in your VS Code terminal or your CLI:
 
 ```bash
-npm intall
+npm install
 # and
 npm install chart.js
 # and
@@ -99,3 +99,13 @@ npm install chart.js@3.9.1
 </div>
 
 
+<div>
+  <!-- DEVELOPERS -->
+  <h2>Developers</h2>
+    <ul>
+      <li>Kenan Ben Polgo</li>
+      <li>Ryan Paul Go</li>
+      <li>Jedsymel Jabadan</li>
+      <li>Juster Ureta</li>
+    </ul>
+</div>
