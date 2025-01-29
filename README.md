@@ -74,6 +74,8 @@ npm install chart.js@3.9.1
 npm install next react react-dom
 # and
 npm install firebase
+# and
+npm install firebase@latest react-firebase-hooks react-firebaseui --legacy-peer-deps
 ```
 
 <div>
