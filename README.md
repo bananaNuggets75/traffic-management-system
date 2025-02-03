@@ -76,6 +76,12 @@ npm install next react react-dom
 npm install firebase
 # and
 npm install firebase@latest react-firebase-hooks react-firebaseui --legacy-peer-deps
+# or
+npm install --legacy-peer-deps
+# and
+npm outdated react-firebaseui
+# and
+npm update react-firebaseui
 ```
 
 <div>
